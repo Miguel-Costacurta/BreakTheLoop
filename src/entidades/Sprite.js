@@ -1,5 +1,5 @@
 export class Sprite {
-    constructor({ position, imageSrc, scale = 1, framesMax = 1, offset = {x:0,y:0} }){
+    constructor({ position, imageSrc, scale = 1, framesMax = 1, offset = { x: 0, y: 0 } }) {
         this.position = position;
         this.width = 50;
         this.height = 150;
@@ -12,7 +12,10 @@ export class Sprite {
         this.frameHold = 10;
         this.offset = offset;
     }
-    draw(context){
+
+    draw(context) {
+        if (!this.image.complete) return;
+
         context.drawImage(
             this.image,
             this.frameCurrent * (this.image.width / this.framesMax),
@@ -23,16 +26,17 @@ export class Sprite {
             this.position.y - this.offset.y,
             (this.image.width / this.framesMax) * this.scale,
             this.image.height * this.scale
-        )
+        );
     }
-    update(){
-        this.draw(context)
+
+    update(secondsPassed, context) {
+        this.draw(context);
         this.frameElapsed++;
 
-        if(this.frameElapsed % this.frameHold === 0){
-            if(this.frameCurrent < this.framesMax-1){
-                this.frameCurrent++
-            }else {
+        if (this.frameElapsed % this.frameHold === 0) {
+            if (this.frameCurrent < this.framesMax - 1) {
+                this.frameCurrent++;
+            } else {
                 this.frameCurrent = 0;
             }
         }

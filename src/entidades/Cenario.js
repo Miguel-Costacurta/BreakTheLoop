@@ -1,12 +1,15 @@
-export class Cenario{
-    constructor(){
+export class Cenario {
+    constructor() {
         this.image = document.querySelector('img[alt="background"]');
     }
-    update(){ //so para n dar erro  
+
+    update() {
+        // Cenario estático - nada a atualizar por enquanto
     }
-    
-    draw(context){
-        context.drawImage(this.image, 0, 0);
+
+    draw(context) {
+        if (this.image && this.image.complete) {
+            context.drawImage(this.image, 0, 0);
+        }
     }
 }
-
