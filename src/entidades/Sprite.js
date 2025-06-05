@@ -31,7 +31,7 @@ export class Sprite {
 
     update(secondsPassed, context) {
         this.draw(context);
-        this.frameElapsed++;
+        this.frameElapsed+=0.5;
 
         if (this.frameElapsed % this.frameHold === 0) {
             if (this.frameCurrent < this.framesMax - 1) {

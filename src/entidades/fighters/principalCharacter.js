@@ -3,11 +3,11 @@ import { lutadores } from "./Lutadores.js";
 export class principalCharacter extends lutadores {
     constructor({ position }) {
         super({
-            nome: "Bred",
+            nome: "Corleone",
             position,
-            imageSrc: '../../../images/Gangsters_1/idle.png',
-            scale: 1.5,
-            framesMax: 6,
+            imageSrc: '../../../images/Gangsters_1/Idle_2.png',
+            scale: 3,
+            framesMax: 11,
             offset: { x: 0, y: 0 },
             velocidade: 100
         });
