@@ -11,11 +11,27 @@ export class Sprite {
         this.frameElapsed = 0;
         this.frameHold = 10;
         this.offset = offset;
+        this.flip = false;
     }
 
-    draw(context) {
+    draw(context,flip = false) {
         if (!this.image.complete) return;
-
+        context.save();
+        if (flip) {
+        context.translate(this.position.x + (this.image.width / this.framesMax) * this.scale, this.position.y);
+        context.scale(-1, 1);
+        context.drawImage(
+            this.image,
+            this.frameCurrent * (this.image.width / this.framesMax),
+            0,
+            this.image.width / this.framesMax,
+            this.image.height,
+            0 - this.offset.x,
+            0 - this.offset.y,
+            (this.image.width / this.framesMax) * this.scale,
+            this.image.height * this.scale
+        );
+    } else {
         context.drawImage(
             this.image,
             this.frameCurrent * (this.image.width / this.framesMax),
@@ -28,17 +44,3 @@ export class Sprite {
             this.image.height * this.scale
         );
     }
-
-    update(secondsPassed, context) {
-        this.draw(context);
-        this.frameElapsed+=0.5;
-
-        if (this.frameElapsed % this.frameHold === 0) {
-            if (this.frameCurrent < this.framesMax - 1) {
-                this.frameCurrent++;
-            } else {
-                this.frameCurrent = 0;
-            }
-        }
-    }
-}

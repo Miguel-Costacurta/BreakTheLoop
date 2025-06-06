@@ -1,9 +1,20 @@
 import { lutadores } from "./Lutadores.js";
 
-export class Lingui extends lutadores {
-    constructor(x,y,velocidade){
-        super('XX',x,y,velocidade);
+export class Vilao2 extends lutadores {
+    constructor({ position, velocidade }) {
+        super({
+            nome: "Vilao2",
+            position,
+            imageSrc: "../../../images/Homeless_2/Idle.png", 
+            scale: 3,
+            framesMax: 7,
+            offset: { x: 0, y: 0 },
+            velocidade
+        });
+        this.flip = true;
+    }
 
-        this.image = document.querySelector('img[alt="XX"]');
+    update(secondsPassed, context) {
+        super.update(secondsPassed, context);
     }
 }
