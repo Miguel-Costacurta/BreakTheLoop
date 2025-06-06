@@ -1,6 +1,6 @@
 export class Movimentos {
     constructor (player, keys){
-        this.player;
+        this.player = player;
         window.addEventListener('keydown', (event) =>{
         switch(event.key){
             case 'd':
@@ -9,8 +9,11 @@ export class Movimentos {
             case 'a':
                 keys.a.pressed = true;
                 break;
-            case 'space':
+            case ' ':
                 keys.space.pressed = true;
+                if(this.player.noChao){
+                    this.player.velocidade.y = -17;
+                }
                 break;
             case 'f':
                 keys.f.pressed = true;
@@ -28,7 +31,7 @@ export class Movimentos {
             case 'a':
                 keys.a.pressed = false;
                 break;
-            case 'space':
+            case ' ':
                 keys.space.pressed = false;
                 break;
             case 'f':

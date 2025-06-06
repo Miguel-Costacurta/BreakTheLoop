@@ -9,7 +9,7 @@ export class principalCharacter extends lutadores {
             scale: 3,
             framesMax: 11,
             offset: { x: 0, y: 0 },
-            velocidade,
+            velocidade: {x: 0, y:0},
             isControlled: true
         });
         this.sprites = {
@@ -27,7 +27,7 @@ export class principalCharacter extends lutadores {
         },
         jump: {
             imageSrc: '../../../images/Gangsters_1/Jump.png',
-            framesMax: 9
+            framesMax: 10
         }
    
         };

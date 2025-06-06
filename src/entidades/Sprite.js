@@ -11,7 +11,7 @@ export class Sprite {
         this.frameElapsed = 0;
         this.frameHold = 10;
         this.offset = offset;
-        this.flip = false;
+         this.flip = false;
     }
 
     draw(context,flip = false) {

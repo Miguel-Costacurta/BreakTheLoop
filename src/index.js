@@ -26,12 +26,12 @@ function iniciarJogo() {
   // Criação dos objetos
   player = new principalCharacter({
     position: { x: 200, y: 450 },
-    velocidade: 0
+    velocidade: {x: 0, y:0} 
   });
 
   const vilao2 = new Vilao2({
     position: { x: canvas.width - 500, y: 450 },
-    velocidade: 0
+    velocidade: {x: 0, y:0}
   });
 
   entidades = [ new Cenario(), player, vilao2 ];
@@ -52,22 +52,23 @@ function frame(currentTime) {
   if (keys.a.pressed) {
     player.switchSprite('run');
     player.flip = true;
-    player.velocidade = -200;
+    player.velocidade.x = -3;
   } else if (keys.d.pressed) {
     player.switchSprite('run');
     player.flip = false;
-    player.velocidade = 200;
+    player.velocidade.x = 3;
   } else {
-    player.velocidade = 0;
+    player.velocidade.x = 0;
     player.switchSprite('idle');
   }
 
   if (keys.space.pressed) {
     player.switchSprite('jump');
-    // lógica de pulo (deve estar no update ou Movimentos)
+    
   }
 
   if (keys.f.pressed) {
+    player.velocidade.x = 0;
     player.switchSprite('attack');
   }
 
