@@ -1,15 +1,18 @@
 import { principalCharacter } from "./entidades/fighters/principalCharacter.js"
 import { Cenario } from "./entidades/Cenario.js"
 import { Vilao2 } from "./entidades/fighters/vilao2.js"
+import { Vilao3 } from "./entidades/fighters/vilao3.js"
 import { Movimentos } from "./constantes/movimento.js"
+import { Cenario2 } from "./entidades/Cenario2.js"
 
 // Variáveis globais do jogo
 let canvas, context
 let previousTime = 0
 let jogoIniciado = false
 let entidades = []
-let player
-let vilao2
+let vilao2, vilao3, player;
+let faseAtual = 1;
+let transicaoEmAndamento = false;
 
 document.addEventListener("DOMContentLoaded", () => {
   const musicaFundo = document.getElementById("musicaFundo");
@@ -86,6 +89,11 @@ function iniciarJogo() {
     velocidade: { x: 0, y: 0 },
   })
 
+  vilao3 = new Vilao3({
+    position: { x: canvas.width - 500, y: 450 }, // Posiciona no lado direito
+    velocidade: { x: 0, y: 0 },
+  })
+  
   // ========================================
   // CONFIGURAÇÃO DA IA
   // ========================================
@@ -265,5 +273,39 @@ function frame(currentTime) {
   // console.log("Estado do Vilão:", vilao2.getEstadoAtual());
 
   // Continua o loop do jogo
+  
+  if (faseAtual === 1 && vilao2.morto && !transicaoEmAndamento) {
+    transicaoEmAndamento = true
+    iniciarTransicaoParaFase2()
+  }
   requestAnimationFrame(frame)
+}
+
+function mostrarTelaPreta(callbackDepois) {
+  const tela = document.getElementById("tela-transicao")
+  tela.style.opacity = "1"
+
+  setTimeout(() => {
+    callbackDepois()
+    tela.style.opacity = "0"
+  }, 2000)
+}
+
+function iniciarTransicaoParaFase2() {
+  mostrarTelaPreta(() => {
+    console.log("Transição para fase 2 iniciada...")
+
+    const novoCenario = new Cenario2()
+
+    const vilao3 = new Vilao3({
+      position: { x: canvas.width - 500, y: 450 },
+      velocidade: { x: 0, y: 0 },
+    })
+    vilao3.setTarget(player)
+
+    entidades = [novoCenario, player, vilao3]
+
+    faseAtual = 2
+    transicaoEmAndamento = false
+  })
 }
