@@ -73,5 +73,16 @@
   <img src="images/background_1.png" alt="background_1">
 </body>
 
+<script>
+  const musicaFundo = new Audio('assets/sounds/musica-fundo.mp3');
+  musicaFundo.loop = true;
+  musicaFundo.volume = 0.5;
+
+  document.getElementById("startGameBtn").addEventListener("click", () => {
+    musicaFundo.play();
+    iniciarJogo(); // sua função de início do jogo
+  });
+</script>
+
 
 </html>
