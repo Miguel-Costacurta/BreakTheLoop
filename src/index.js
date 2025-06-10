@@ -295,13 +295,13 @@ function frame(currentTime) {
 }
 
 function mostrarTelaPreta(callbackDepois) {
-  const tela = document.getElementById("tela-transicao")
-  tela.style.opacity = "1"
+  const tela = document.getElementById("fase-transicao")
+  tela.style.opacity = "1000"
 
   setTimeout(() => {
     callbackDepois()
     tela.style.opacity = "0"
-  }, 2000)
+  }, 3000)
 }
 
 function iniciarTransicaoParaFase2() {
