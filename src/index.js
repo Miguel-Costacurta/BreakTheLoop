@@ -245,7 +245,6 @@ function frame(currentTime) {
       player.projeteis = player.projeteis.filter((p) => p !== proj)
     }
   }
-
   // ========================================
   // LIMPEZA DE PROJÉTEIS DO JOGADOR
   // ========================================

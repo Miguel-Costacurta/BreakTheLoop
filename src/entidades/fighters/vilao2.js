@@ -586,21 +586,7 @@ export class Vilao2 extends lutadores {
    */
   draw(context) {
     // Chama o método draw da classe pai primeiro
-    super.draw(context)
-
-    // DEBUG: Desenha hitbox de ataque especial quando ativo
-    if (this.atacandoEspecial) {
-      const especialAtk = this.getSpecialAttackHitBox()
-      context.strokeStyle = "purple"
-      context.lineWidth = 4
-      context.strokeRect(especialAtk.x, especialAtk.y, especialAtk.width, especialAtk.height)
-
-      // Adicionar texto para identificar o ataque especial
-      context.fillStyle = "purple"
-      context.font = "14px Arial"
-      context.fillText("ESPECIAL", especialAtk.x, especialAtk.y - 5)
-    }
-
+    super.draw(context);
     // Resetar configurações do contexto
     context.lineWidth = 1
   }

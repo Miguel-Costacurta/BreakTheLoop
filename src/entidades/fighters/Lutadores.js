@@ -86,9 +86,7 @@ export class lutadores extends Sprite {
     if (this.morto) return
 
     this.health -= dano
-    console.log(`${this.nome} levou dano! Vida restante: ${this.health}`)
     if (this.health <= 0) {
-      console.log(`${this.nome} morreu!`)
       this.matar()
     } else {
       this.switchSprite && this.switchSprite("hit")
@@ -102,12 +100,10 @@ export class lutadores extends Sprite {
       // Verifica se a animação de morte terminou
       if (this.isAnimationDone && !this.deathAnimationComplete) {
         this.deathAnimationComplete = true
-        console.log(`${this.nome} - Animação de morte completa, personagem vai desaparecer em 1 segundo`)
 
         // Espera 1 segundo e depois marca para desaparecer
         setTimeout(() => {
           this.shouldDisappear = true
-          console.log(`${this.nome} desapareceu da tela`)
         }, 1000)
       }
       return
@@ -183,15 +179,8 @@ export class lutadores extends Sprite {
     context.strokeStyle = "black"
     context.strokeRect(barraX, barraY, barraLargura, barraAltura)
 
-    // DEBUG: desenhar a hitbox
-    const hitbox = this.getHitBox()
-    context.strokeStyle = "red"
-    context.strokeRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height)
-
     if (this.atacando) {
       const atk = this.getAttackHitBox()
-      context.strokeStyle = "blue"
-      context.strokeRect(atk.x, atk.y, atk.width, atk.height)
     }
   }
 }
