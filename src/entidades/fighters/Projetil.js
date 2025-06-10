@@ -2,10 +2,10 @@ export class Projetil {
     constructor({ position, velocidade, direction }) {
         this.position = { ...position };
         this.velocidade = velocidade;
-        this.width = 20;
-        this.height = 10;
+        this.width = 10;
+        this.height = 3;
         this.direction = direction;
-        this.dano = 2;
+        this.dano = 4;
     }
 
     update() {

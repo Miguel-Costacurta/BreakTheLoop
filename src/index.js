@@ -1,15 +1,18 @@
 import { principalCharacter } from "./entidades/fighters/principalCharacter.js"
 import { Cenario } from "./entidades/Cenario.js"
 import { Vilao2 } from "./entidades/fighters/vilao2.js"
+import { Vilao3 } from "./entidades/fighters/vilao3.js"
 import { Movimentos } from "./constantes/movimento.js"
+import { Cenario2 } from "./entidades/Cenario2.js"
 
 // Variáveis globais do jogo
 let canvas, context
 let previousTime = 0
 let jogoIniciado = false
 let entidades = []
-let player
-let vilao2
+let vilao2, vilao3, player;
+let faseAtual = 1;
+let transicaoEmAndamento = false;
 
 // Carrega o som do tiro
 const shotSound = new Audio('assets/shot.mp3');
@@ -99,6 +102,11 @@ function iniciarJogo() {
     velocidade: { x: 0, y: 0 },
   })
 
+  vilao3 = new Vilao3({
+    position: { x: canvas.width - 500, y: 450 }, // Posiciona no lado direito
+    velocidade: { x: 0, y: 0 },
+  })
+  
   // ========================================
   // CONFIGURAÇÃO DA IA
   // ========================================
@@ -167,7 +175,7 @@ function frame(currentTime) {
     const playerHitBox = player.getHitBox()
 
     if (colisao(vilaoAttack, playerHitBox)) {
-      player.takeDamage(4) // Vilão corpo a corpo causa mais dano (4)
+      player.takeDamage(5) // Vilão corpo a corpo causa mais dano (5)
       vilao2.atacando = false // Para o ataque
 
       // Efeito visual de impacto (opcional)
@@ -196,8 +204,8 @@ function frame(currentTime) {
   // ========================================
   // CONTROLES DO JOGADOR
   // ========================================
-
-  // Movimento horizontal
+  if(!player.morto){
+    // Movimento horizontal
   if (keys.a.pressed) {
     player.switchSprite("run")
     player.flip = true
@@ -231,6 +239,7 @@ function frame(currentTime) {
       player.atacando = false
     }
   }, 200)
+  }
 
   // ========================================
   // ATUALIZAÇÃO DE TODAS AS ENTIDADES
@@ -262,7 +271,6 @@ function frame(currentTime) {
       player.projeteis = player.projeteis.filter((p) => p !== proj)
     }
   }
-
   // ========================================
   // LIMPEZA DE PROJÉTEIS DO JOGADOR
   // ========================================
@@ -278,5 +286,39 @@ function frame(currentTime) {
   // console.log("Estado do Vilão:", vilao2.getEstadoAtual());
 
   // Continua o loop do jogo
+  
+  if (faseAtual === 1 && vilao2.morto && !transicaoEmAndamento) {
+    transicaoEmAndamento = true
+    iniciarTransicaoParaFase2()
+  }
   requestAnimationFrame(frame)
+}
+
+function mostrarTelaPreta(callbackDepois) {
+  const tela = document.getElementById("tela-transicao")
+  tela.style.opacity = "1"
+
+  setTimeout(() => {
+    callbackDepois()
+    tela.style.opacity = "0"
+  }, 2000)
+}
+
+function iniciarTransicaoParaFase2() {
+  mostrarTelaPreta(() => {
+    console.log("Transição para fase 2 iniciada...")
+
+    const novoCenario = new Cenario2()
+
+    const vilao3 = new Vilao3({
+      position: { x: canvas.width - 500, y: 450 },
+      velocidade: { x: 0, y: 0 },
+    })
+    vilao3.setTarget(player)
+
+    entidades = [novoCenario, player, vilao3]
+
+    faseAtual = 2
+    transicaoEmAndamento = false
+  })
 }

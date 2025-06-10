@@ -3,13 +3,13 @@ export class Movimentos {
         this.player = player;
         window.addEventListener('keydown', (event) =>{
         switch(event.key){
-            case 'd':
+            case 'ArrowRight':
                 keys.d.pressed = true;
                 break;
-            case 'a':
+            case 'ArrowLeft':
                 keys.a.pressed = true;
                 break;
-            case ' ':
+            case 'ArrowUp':
                 keys.space.pressed = true;
                 if(this.player.noChao){
                     this.player.velocidade.y = -17;
@@ -29,13 +29,13 @@ export class Movimentos {
     }); 
     window.addEventListener('keyup', (event) =>{
         switch(event.key){
-            case 'd':
+            case 'ArrowRight':
                 keys.d.pressed = false;
                 break;
-            case 'a':
+            case 'ArrowLeft':
                 keys.a.pressed = false;
                 break;
-            case ' ':
+            case 'ArrowUp':
                 keys.space.pressed = false;
                 break;
             case 'f':
