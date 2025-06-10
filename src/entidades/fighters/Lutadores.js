@@ -14,17 +14,29 @@ export class lutadores extends Sprite {
         this.noChao = false;
         this.health = 100;
         this.hitbox = {
-            offset: {x:125, y:160},
-            width:115,
+            offset: {x:130, y:165},
+            width:100,
             height:225,
         };
         this.atacando = false;
         this.tempoAtaque = 0;
         this.duracaoAtaque = 20;
         this.projeteis =[];
+        this.morto = false;
     }
 
+    matar() {
+    if (!this.morto) {
+        console.log(`${this.nome} morreu!`);
+        this.morto = true;
+        this.switchSprite && this.switchSprite("death");
+        this.velocidade.x = 0;
+        this.velocidade.y = 0;
+    }
+}
+
     atacar(){
+        if (this.morto) return;
         if (!this.atacando){
             this.atacando = true;
             this.tempoAtaque = 0;
@@ -61,10 +73,17 @@ export class lutadores extends Sprite {
         console.log(`${this.nome} levou dano! Vida restante: ${this.health}`);
         if(this.health <= 0){
             console.log(`${this.nome} morreu!`);
+            this.matar();
+        }else{
+            this.switchSprite && this.switchSprite("hit");
         }
     }
 
     update(secondsPassed, context) {
+         if (this.morto) {
+            this.switchSprite && this.switchSprite("death"); // fixa sprite de morte
+            return; // não atualiza física, etc.
+        }
         //Aplicar gravidade no jogo
         this.velocidade.y += this.gravity;
         //Metodo novo para atualizar as posições
@@ -103,6 +122,7 @@ export class lutadores extends Sprite {
                 this.flip = !this.flip;
             }
         }
+
         super.update(secondsPassed, context);
     }
 

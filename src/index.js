@@ -164,8 +164,8 @@ function frame(currentTime) {
   // ========================================
   // CONTROLES DO JOGADOR
   // ========================================
-
-  // Movimento horizontal
+  if(!player.morto){
+    // Movimento horizontal
   if (keys.a.pressed) {
     player.switchSprite("run")
     player.flip = true
@@ -199,6 +199,7 @@ function frame(currentTime) {
       player.atacando = false
     }
   }, 200)
+  }
 
   // ========================================
   // ATUALIZAÇÃO DE TODAS AS ENTIDADES

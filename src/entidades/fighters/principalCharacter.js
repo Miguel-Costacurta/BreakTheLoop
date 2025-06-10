@@ -28,8 +28,11 @@ export class principalCharacter extends lutadores {
         jump: {
             imageSrc: '../../../images/Gangsters_1/Jump.png',
             framesMax: 10
+        },
+        dead: {
+            imageSrc: '../../../images/Gangsters_1/Dead.png',
+            framesMax: 5
         }
-   
         };
         for (const estado in this.sprites) {
             const sprite = this.sprites[estado];
@@ -37,6 +40,14 @@ export class principalCharacter extends lutadores {
             sprite.image.src = sprite.imageSrc;
         }
         this.flip = false;
+        this.vida = 100;
+    }
+
+    matar(){
+        this.morto = true;
+        this.switchSprite("dead");
+        this.velocidade.x = 0;
+        this.velocidade.y = 0;
     }
 
     switchSprite(estado) {
@@ -49,6 +60,7 @@ export class principalCharacter extends lutadores {
     }
 
     update(secondsPassed, context) {
+        if(this.morto) return;
         super.update(secondsPassed, context);
     }
 }
