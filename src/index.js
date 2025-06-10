@@ -8,12 +8,13 @@ let previousTime = 0;
 let jogoIniciado = false;
 let entidades = [];
 let player;
+let vilao2;
 
 const keys = {
   a: { pressed: false },
   d: { pressed: false },
   space: { pressed: false },
-  f: { pressed: false },
+  f: { pressed: false, pressionadoAgora: false },
   e: { pressed: false }
 };
 
@@ -29,7 +30,7 @@ function iniciarJogo() {
     velocidade: {x: 0, y:0} 
   });
 
-  const vilao2 = new Vilao2({
+  vilao2 = new Vilao2({
     position: { x: canvas.width - 500, y: 450 },
     velocidade: {x: 0, y:0}
   });
@@ -42,11 +43,30 @@ function iniciarJogo() {
   requestAnimationFrame(frame);
 }
 
+function colisao(rect1, rect2) {
+    return (
+        rect1.x < rect2.x + rect2.width &&
+        rect1.x + rect1.width > rect2.x &&
+        rect1.y < rect2.y + rect2.height &&
+        rect1.y + rect1.height > rect2.y
+    );
+}
+
 function frame(currentTime) {
   const secondsPassed = (currentTime - previousTime) / 1000;
   previousTime = currentTime;
 
   context.clearRect(0, 0, canvas.width, canvas.height);
+
+  if (player.atacando){
+    const attack = player.getAttackHitBox();
+    const vilaoHitBox = vilao2.getHitBox();
+
+    if(colisao(attack, vilaoHitBox)){
+      vilao2.takeDamage(2);
+      player.atacando = false
+    };
+  }
 
   // Controle de movimento e animações
   if (keys.a.pressed) {
@@ -67,16 +87,50 @@ function frame(currentTime) {
     
   }
 
-  if (keys.f.pressed) {
+  console.log("F pressionado, Cooldown:", currentTime - lastShootTime > shootCooldownTime)
+
+  if (keys.f.pressionadoAgora && currentTime - lastShootTime > shootCooldownTime) {
     player.velocidade.x = 0;
+    player.atacar();
     player.switchSprite('attack');
+    lastShootTime = currentTime;
+    keys.f.pressionadoAgora = false;
+    console.log("Tiro disparado!", currentTime)
   }
 
+  setTimeout(() => {
+    if(player.atacando){
+      player.atacando = false;
+    };
+  }, 200);
   // Atualiza e desenha
   for (const entidade of entidades) {
     entidade.update(secondsPassed, context);
     entidade.draw(context);
   }
 
+  for(const proj of player.projeteis){
+    proj.update();
+    proj.draw(context);
+
+    const projHitBox = proj.getHitBox();
+    const vilaoHitBox = vilao2.getHitBox();
+
+    if(colisao(projHitBox, vilaoHitBox)){
+      vilao2.takeDamage(proj.dano);
+
+      player.projeteis = player.projeteis.filter(p => p !== proj);
+    }
+  }
+  for (let i = player.projeteis.length - 1; i >= 0; i--) {
+    const proj = player.projeteis[i]
+    const projHitBox = proj.getHitBox()
+    const vilaoHitBox = vilao2.getHitBox()
+
+    if (colisao(projHitBox, vilaoHitBox)) {
+      vilao2.takeDamage(proj.dano)
+      player.projeteis.splice(i, 1)
+    }
+  }
   requestAnimationFrame(frame);
 }

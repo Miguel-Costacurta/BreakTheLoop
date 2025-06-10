@@ -1,4 +1,5 @@
 import { Sprite } from "../Sprite.js";
+import { Projetil } from "./Projetil.js";
 
 export class lutadores extends Sprite {
     constructor({ nome, position, imageSrc, scale = 1, framesMax = 1, offset = { x: 0, y: 0 }, isControlled = false }) {
@@ -11,6 +12,56 @@ export class lutadores extends Sprite {
         this.isControlled = isControlled;
         this.gravity = 0.5;
         this.noChao = false;
+        this.health = 100;
+        this.hitbox = {
+            offset: {x:125, y:160},
+            width:115,
+            height:225,
+        };
+        this.atacando = false;
+        this.tempoAtaque = 0;
+        this.duracaoAtaque = 20;
+        this.projeteis =[];
+    }
+
+    atacar(){
+        if (!this.atacando){
+            this.atacando = true;
+            this.tempoAtaque = 0;
+
+            const proj = new Projetil({
+                position:{ x: this.position.x + (this.flip ? -10 : 80), y: this.position.y + 250},
+                velocidade: { x: 8 },
+                direction: this.flip ? -1 : 1
+            });
+            this.projeteis.push(proj);
+        }
+    }
+
+    getHitBox(){
+        return{
+            x:this.position.x + this.hitbox.offset.x,
+            y:this.position.y + this.hitbox.offset.y,
+            width:this.hitbox.width,
+            height:this.hitbox.height
+        };
+    }
+
+    getAttackHitBox(){
+        return{
+            x:this.position.x + (this.flip ? -30 :50),
+            y: this.position.y,
+            width:50,
+            height:50
+        };
+    };
+
+    takeDamage(dano){
+        this.health -= dano;
+        console.log(`${this.nome} levou dano! Vida restante: ${this.health}`);
+        if(this.health <= 0){
+            console.log(`${this.nome} morreu!`);
+        }
     }
 
     update(secondsPassed, context) {
@@ -57,5 +108,36 @@ export class lutadores extends Sprite {
 
     draw(context) {
         super.draw(context,this.flip);
+
+        const barraLargura = 80;
+        const barraAltura = 10;
+        const spriteLargura = (this.image.width / this.framesMax) * this.scale;
+        const barraX = this.position.x + (spriteLargura / 2) - (barraLargura / 2);
+        const barraY = this.position.y + 130;
+        const vidaRestante = (this.health / 100) * barraLargura;
+
+        // Fundo da barra
+        context.fillStyle = 'gray';
+        context.fillRect(barraX, barraY, barraLargura, barraAltura);
+
+        // Barra vermelha (vida atual)
+        context.fillStyle = 'red';
+        context.fillRect(barraX, barraY, vidaRestante, barraAltura);
+
+        // Borda da barra
+        context.strokeStyle = 'black';
+        context.strokeRect(barraX, barraY, barraLargura, barraAltura);
+
+        // DEBUG: desenhar a hitbox
+        const hitbox = this.getHitBox();
+        context.strokeStyle = 'red';
+        context.strokeRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
+
+        if (this.atacando) {
+            const atk = this.getAttackHitBox();
+            context.strokeStyle = 'blue';
+            context.strokeRect(atk.x, atk.y, atk.width, atk.height);
+        }
+
     }
 }

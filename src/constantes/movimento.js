@@ -16,7 +16,11 @@ export class Movimentos {
                 }
                 break;
             case 'f':
-                keys.f.pressed = true;
+                console.log("Tecla F pressionada", keys.f.pressed)
+                if(!keys.f.pressed){
+                    keys.f.pressionadoAgora = true;
+                }
+                keys.f.pressed = true
                 break;
             case 'e':
                 keys.e.pressed = true;
@@ -36,6 +40,8 @@ export class Movimentos {
                 break;
             case 'f':
                 keys.f.pressed = false;
+                keys.f.pressionadoAgora = false;
+                console.log("Tecla F solta");
                 break;
             case 'e':
                 keys.e.pressed = false;

@@ -9,7 +9,7 @@ export class Sprite {
         this.framesMax = framesMax;
         this.frameCurrent = 0;
         this.frameElapsed = 0;
-        this.frameHold = 10;
+        this.frameHold = 7;
         this.offset = offset;
          this.flip = false;
     }
