@@ -11,18 +11,23 @@ let entidades = []
 let player
 let vilao2
 
-// Cria o objeto de áudio
-const musicaFundo = new Audio('assets/sounds/musica-fundo.mp3');
+document.addEventListener("DOMContentLoaded", () => {
+  const musicaFundo = document.getElementById("musicaFundo");
+  musicaFundo.volume = 0.2;
 
-// Define para tocar em loop
-musicaFundo.loop = true;
+  let musicaTocando = false;
 
-// Define o volume (0.0 a 1.0)
-musicaFundo.volume = 0.5;
-
-// Toca a música
-musicaFundo.play().catch((error) => {
-  console.warn("O navegador bloqueou a reprodução automática. Toque a música após uma interação do usuário.");
+  document.addEventListener("keydown", () => {
+    if (!musicaTocando) {
+      musicaFundo.play()
+        .then(() => {
+          musicaTocando = true;
+        })
+        .catch((err) => {
+          console.error("Erro ao tentar tocar a música:", err);
+        });
+    }
+  });
 });
 
 // Sistema de controles do jogador
