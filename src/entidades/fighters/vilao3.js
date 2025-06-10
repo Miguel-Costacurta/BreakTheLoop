@@ -120,9 +120,11 @@ export class Vilao3 extends lutadores {
     return currentTime - this.tempoUltimoEspecial > this.cooldownEspecial
   }
 
+
   targetEstaEsquerda(target) {
     return target.position.x < this.position.x
   }
+
 
   targetNaAlturaCorreta(target) {
     const diferencaAltura = Math.abs(target.position.y - this.position.y)
@@ -135,6 +137,7 @@ export class Vilao3 extends lutadores {
       distancia < this.distanciaAtaqueEspecial &&
       this.podeUsarEspecial(currentTime) &&
       this.targetNaAlturaCorreta(target) &&
+
       target.health > 30
     )
   }
@@ -143,6 +146,7 @@ export class Vilao3 extends lutadores {
     if (!target) return
 
     const distancia = this.calcularDistancia(target)
+
     this.tempoNoEstado += 16
 
     const acaoAleatoria = Math.random()
@@ -150,6 +154,7 @@ export class Vilao3 extends lutadores {
     switch (this.estado) {
       case "idle":
         this.switchSprite("idle")
+
 
         if (distancia < this.distanciaPerseguicao) {
           if (this.tempoNoEstado > this.getTempoReacaoAleatorio()) {
@@ -173,6 +178,7 @@ export class Vilao3 extends lutadores {
           this.carregandoEspecial = true
           console.log("🔥 Vilão 3 vai usar ATAQUE ESPECIAL!")
         } else if (distancia < this.distanciaRecuo && acaoAleatoria < this.chanceRecuo) {
+
           this.estado = "recuando"
           this.tempoNoEstado = 0
         }
@@ -182,6 +188,7 @@ export class Vilao3 extends lutadores {
         this.switchSprite("attack")
 
         if (this.tempoNoEstado > this.duracaoAtaque) {
+
           this.estado = "perseguindo"
           this.tempoNoEstado = 0
         }
@@ -203,6 +210,7 @@ export class Vilao3 extends lutadores {
             this.estado = "recuando"
           } else {
             this.estado = "perseguindo"
+
           }
           this.tempoNoEstado = 0
         }
@@ -273,6 +281,7 @@ export class Vilao3 extends lutadores {
     if (this.carregandoEspecial && this.tempoNoEstado < this.tempoCarregamento) {
       const distancia = this.calcularDistancia(target)
       if (distancia > this.distanciaAtaqueEspecial * 0.8) {
+
         const velocidadeLenta = 0.5
         if (target.position.x > this.position.x) {
           this.velocidade.x = velocidadeLenta
@@ -282,7 +291,6 @@ export class Vilao3 extends lutadores {
       }
     }
   }
-
   perseguirTarget(target) {
     const distancia = this.calcularDistancia(target)
 
@@ -326,6 +334,7 @@ export class Vilao3 extends lutadores {
     }
   }
 
+
   recuarDoTarget(target) {
     const velocidadeRecuo = this.velocidadeMovimento * 1.8
 
@@ -337,6 +346,7 @@ export class Vilao3 extends lutadores {
       this.flip = false
     }
   }
+
 
   getAttackHitBox() {
     const attackX = this.flip
@@ -371,6 +381,7 @@ export class Vilao3 extends lutadores {
     }
   }
 
+
   update(secondsPassed, context) {
     if (this.morto) {
       super.update(secondsPassed, context)
@@ -402,6 +413,7 @@ export class Vilao3 extends lutadores {
     this.target = target
   }
 
+
   draw(context) {
     // Se deve desaparecer, não desenha nada
     if (this.shouldDisappear) {
@@ -426,4 +438,5 @@ export class Vilao3 extends lutadores {
 
     context.lineWidth = 1
   }
+
 }

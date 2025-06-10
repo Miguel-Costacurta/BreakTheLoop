@@ -14,6 +14,19 @@ let vilao2, vilao3, player;
 let faseAtual = 1;
 let transicaoEmAndamento = false;
 
+// Carrega o som do tiro
+const shotSound = new Audio('assets/shot.mp3');
+shotSound.volume = 0.2;
+
+// Ativa o som ao pressionar F
+document.addEventListener("keydown", function(event) {
+    if (event.key.toLowerCase() === "f") {
+        console.log("Som do tiro tocando");
+        
+        // Aqui você pode também disparar o projétil, se quiser
+    }
+});
+
 document.addEventListener("DOMContentLoaded", () => {
   const musicaFundo = document.getElementById("musicaFundo");
   musicaFundo.volume = 0.2;
