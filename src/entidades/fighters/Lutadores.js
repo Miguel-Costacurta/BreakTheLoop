@@ -29,9 +29,9 @@ export class lutadores extends Sprite {
     if (!this.morto) {
         console.log(`${this.nome} morreu!`);
         this.morto = true;
-        this.switchSprite && this.switchSprite("death");
         this.velocidade.x = 0;
         this.velocidade.y = 0;
+        this.switchSprite("death");
     }
 }
 
@@ -49,6 +49,16 @@ export class lutadores extends Sprite {
             this.projeteis.push(proj);
         }
     }
+
+    switchSprite(spriteName) {
+    if (this.currentSprite !== spriteName) {
+    this.currentSprite = spriteName;
+    this.frameIndex = 0;
+    
+    // Aqui você seta se deve repetir ou não a animação
+    this.loop = (spriteName !== 'death'); // só 'death' não repete
+  }
+}
 
     getHitBox(){
         return{
@@ -81,7 +91,7 @@ export class lutadores extends Sprite {
 
     update(secondsPassed, context) {
          if (this.morto) {
-            this.switchSprite && this.switchSprite("death"); // fixa sprite de morte
+            super.update(secondsPassed, context);
             return; // não atualiza física, etc.
         }
         //Aplicar gravidade no jogo

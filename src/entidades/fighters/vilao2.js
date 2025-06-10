@@ -20,30 +20,37 @@ export class Vilao2 extends lutadores {
       idle: {
         imageSrc: "../../../images/Homeless_1/Idle_2.png",
         framesMax: 11, // Sprite de idle com 11 frames
+        loop:true,
       },
       run: {
         imageSrc: "../../../images/Homeless_1/Run.png",
         framesMax: 8, // Sprite de corrida com 8 frames
+        loop:true,
       },
       attack: {
         imageSrc: "../../../images/Homeless_1/Attack_2.png", // Ataque normal
         framesMax: 3, // Ajuste conforme sua sprite de ataque normal
+        loop:false,
       },
       special: {
         imageSrc: "../../../images/Homeless_1/Special.png", // ATAQUE ESPECIAL
         framesMax: 13, // Sprite de ataque especial com 13 frames
+        loop:false,
       },
       jump: {
         imageSrc: "../../../images/Homeless_1/Jump.png",
         framesMax: 16, // Sprite de pulo com 16 frames
+        loop:false,
       },
       hit:{
         imageSrc:"../../../images/Homeless_1/Hurt.png",
-        framesMax: 3
+        framesMax: 3,
+        loop:false,
       },
       death:{
         imageSrc:"../../../images/Homeless_1/Dead.png",
-        framesMax: 4
+        framesMax: 4,
+        loop:false,
       }
     }
 
@@ -532,15 +539,20 @@ export class Vilao2 extends lutadores {
    * Update com IA
    */
   update(secondsPassed, context) {
-    if(this.morto) return;
-    if (this.target) {
-      const currentTime = performance.now()
-      this.atualizarEstado(this.target, currentTime)
-      this.executarComportamento(this.target, currentTime)
-    }
-
-    super.update(secondsPassed, context)
+  if(this.morto){
+    this.switchSprite('death');  // animação de morte
+    super.update(secondsPassed, context);  // atualiza animação
+    return;  // não processa IA ou movimento
   }
+
+  if (this.target) {
+    const currentTime = performance.now()
+    this.atualizarEstado(this.target, currentTime)
+    this.executarComportamento(this.target, currentTime)
+  }
+
+  super.update(secondsPassed, context)
+}
 
   /**
    * Define o target

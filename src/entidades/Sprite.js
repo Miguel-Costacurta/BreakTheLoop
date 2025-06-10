@@ -1,5 +1,5 @@
 export class Sprite {
-    constructor({ position, imageSrc, scale = 1, framesMax = 1, offset = { x: 0, y: 0 } }) {
+    constructor({ position, imageSrc, scale = 1, framesMax = 1, offset = { x: 0, y: 0 }, loop =true }) {
         this.position = position;
         this.width = 50;
         this.height = 150;
@@ -11,7 +11,10 @@ export class Sprite {
         this.frameElapsed = 0;
         this.frameHold = 7;
         this.offset = offset;
-         this.flip = false;
+        this.flip = false;
+        this.loop = true;
+        this.isAnimationDone = false;
+        this.currentSpriteName = null;
     }
 
     draw(context,flip = false) {
@@ -50,14 +53,19 @@ export class Sprite {
     }
 
     update(secondsPassed, context) {
-        this.draw(context);
-        this.frameElapsed+=0.5;
+       if (this.framesMax > 1) {
+        this.frameElapsed += 0.5;
 
-        if (this.frameElapsed % this.frameHold === 0) {
-            if (this.frameCurrent < this.framesMax - 1) {
-                this.frameCurrent++;
-            } else {
-                this.frameCurrent = 0;
+            if (this.frameElapsed >= this.frameHold) {
+                this.frameElapsed = 0;
+
+                if (this.frameCurrent < this.framesMax - 1) {
+                    this.frameCurrent++;
+                } else if (this.loop) {
+                    this.frameCurrent = 0;
+                } else {
+                    this.isAnimationDone = true;
+                }
             }
         }
     }
