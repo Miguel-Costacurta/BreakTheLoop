@@ -8,7 +8,7 @@ export class Vilao3 extends lutadores {
       position,
       imageSrc: "../../../images/Gangsters_3/Idle_2.png", // Sprite inicial atualizada
       scale: 3,
-      framesMax: 11, // Frames da nova sprite de idle
+      framesMax: 14, // Frames da nova sprite de idle
       offset: { x: 0, y: 0 },
       velocidade,
     })
@@ -19,23 +19,23 @@ export class Vilao3 extends lutadores {
     this.sprites = {
       idle: {
         imageSrc: "../../../images/Gangsters_3/Idle_2.png",
-        framesMax: 11, // Sprite de idle com 11 frames
+        framesMax: 14, // Sprite de idle com 11 frames
       },
       run: {
         imageSrc: "../../../images/Gangsters_3/Run.png",
-        framesMax: 8, // Sprite de corrida com 8 frames
+        framesMax: 10, // Sprite de corrida com 8 frames
       },
       attack: {
-        imageSrc: "../../../images/Gangsters_3/Attack_2.png", // Ataque normal
-        framesMax: 3, // Ajuste conforme sua sprite de ataque normal
+        imageSrc: "../../../images/Gangsters_3/Attack.png", // Ataque normal
+        framesMax: 5, // Ajuste conforme sua sprite de ataque normal
       },
       special: {
-        imageSrc: "../../../images/Gangsters_3/Special.png", // ATAQUE ESPECIAL
-        framesMax: 13, // Sprite de ataque especial com 13 frames
+        imageSrc: "../../../images/Gangsters_3/Shot.png", // ATAQUE ESPECIAL
+        framesMax: 12, // Sprite de ataque especial com 13 frames
       },
       jump: {
         imageSrc: "../../../images/Gangsters_3/Jump.png",
-        framesMax: 16, // Sprite de pulo com 16 frames
+        framesMax: 10, // Sprite de pulo com 16 frames
       },
     }
 
@@ -75,9 +75,9 @@ export class Vilao3 extends lutadores {
     // ========================================
     // SISTEMA DE ALEATORIEDADE - Incluindo Ataque Especial
     // ========================================
-    this.chanceAtaqueNormal = 0.6 // 50% chance de ataque normal
-    this.chanceAtaqueEspecial = 0.05 // 15% chance de ataque especial
-    this.chanceRecuo = 0.15 // 15% chance de recuar
+    this.chanceAtaqueNormal = 0.50 // 50% chance de ataque normal
+    this.chanceAtaqueEspecial = 0.15 // 15% chance de ataque especial
+    this.chanceRecuo = 0.05 // 5% chance de recuar
     this.tempoReacaoMin = 300 // Tempo mínimo de reação
     this.tempoReacaoMax = 1000 // Tempo máximo de reação
 

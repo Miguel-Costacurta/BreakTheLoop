@@ -72,8 +72,8 @@ export class Vilao2 extends lutadores {
     this.target = null
 
     // Distâncias ajustadas para combate corpo a corpo
-    this.distanciaAtaque = 60 // Distância para ataque normal
-    this.distanciaAtaqueEspecial = 120 // Distância maior para ataque especial
+    this.distanciaAtaque = 75 // Distância para ataque normal
+    this.distanciaAtaqueEspecial = 80 // Distância maior para ataque especial
     this.distanciaPerseguicao = 1250 // Distância para começar a perseguir
     this.distanciaRecuo = 50 // Distância muito próxima que faz o vilão recuar
 
@@ -82,7 +82,7 @@ export class Vilao2 extends lutadores {
     this.tempoUltimoEspecial = 0 // Quando foi o último ataque especial
     this.cooldownAtaque = 1500 // Tempo entre ataques normais (1.5 segundos)
     this.cooldownEspecial = 4000 // Tempo entre ataques especiais (4 segundos)
-    this.velocidadeMovimento = 2 // Velocidade base (mais lento q o principal)
+    this.velocidadeMovimento = 3 // Velocidade base (mais lento q o principal)
     this.tempoNoEstado = 0.8 // Quanto tempo está no estado atual
     this.duracaoAtaque = 700 // Duração da animação de ataque normal
     this.duracaoEspecial = 2800 // Duração da animação de ataque especial (mais longa)
@@ -102,7 +102,7 @@ export class Vilao2 extends lutadores {
     this.carregandoEspecial = false // Se está preparando ataque especial
     this.tempoCarregamento = 300 // Tempo de preparação do especial (0.5s)
     this.raioEspecial = 150 // Alcance maior do ataque especial
-    this.danoEspecial = 8 // Dano maior do ataque especial
+    this.danoEspecial = 10 // Dano maior do ataque especial
     this.ultimoEspecialUsado = 0 // Controle de quando foi usado
 
     // Vilão começa virado para a esquerda

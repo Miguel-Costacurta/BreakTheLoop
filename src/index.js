@@ -149,7 +149,7 @@ function frame(currentTime) {
     const playerHitBox = player.getHitBox()
 
     if (colisao(vilaoAttack, playerHitBox)) {
-      player.takeDamage(4) // Vilão corpo a corpo causa mais dano (4)
+      player.takeDamage(5) // Vilão corpo a corpo causa mais dano (5)
       vilao2.atacando = false // Para o ataque
 
       // Efeito visual de impacto (opcional)
