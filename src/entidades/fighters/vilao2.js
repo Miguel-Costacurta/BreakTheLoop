@@ -130,15 +130,17 @@ export class Vilao2 extends lutadores {
    */
   switchSprite(estado) {
     const sprite = this.sprites[estado]
-    // Só troca se a sprite existe e é diferente da atual
     if (!sprite || this.image === sprite.image) return
 
-    // Atualiza a imagem e configurações da animação
     this.image = sprite.image
     this.framesMax = sprite.framesMax
-    this.frameCurrent = 0 // Reinicia a animação do frame 0
-  }
+    this.frameCurrent = 0
+    this.currentSprite = estado
 
+    // Define se deve repetir ou não a animação
+    this.loop = estado !== "death" && estado !== "dead"
+    this.isAnimationDone = false
+  }
   // ========================================
   // SISTEMA DE DETECÇÃO - Incluindo Especial
   // ========================================
