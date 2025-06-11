@@ -5,16 +5,17 @@ export class Projetil {
         this.width = 10;
         this.height = 3;
         this.direction = direction;
-        this.dano = 4;
+        this.dano = 2;
     }
 
+    
     update() {
         this.position.x += this.velocidade.x * this.direction;
     }
 
     draw(context) {
-        context.fillStyle = 'yellow';
-        context.fillRect(this.position.x, this.position.y, this.width, this.height);
+    context.fillStyle = 'yellow';
+    context.fillRect(this.position.x + 100, this.position.y, this.width, this.height);
     }
 
     getHitBox() {

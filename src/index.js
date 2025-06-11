@@ -1,7 +1,6 @@
 import { principalCharacter } from "./entidades/fighters/principalCharacter.js"
 import { Cenario } from "./entidades/Cenario.js"
 import { Vilao2 } from "./entidades/fighters/vilao2.js"
-import { Vilao3 } from "./entidades/fighters/vilao3.js"
 import { Movimentos } from "./constantes/movimento.js"
 import { Cenario2 } from "./entidades/Cenario2.js"
 
@@ -101,11 +100,6 @@ function iniciarJogo() {
     position: { x: canvas.width - 500, y: 450 }, // Posiciona no lado direito
     velocidade: { x: 0, y: 0 },
   })
-
-  vilao3 = new Vilao3({
-    position: { x: canvas.width - 500, y: 450 }, // Posiciona no lado direito
-    velocidade: { x: 0, y: 0 },
-  })
   
   // ========================================
   // CONFIGURAÇÃO DA IA
@@ -175,7 +169,7 @@ function frame(currentTime) {
     const playerHitBox = player.getHitBox()
 
     if (colisao(vilaoAttack, playerHitBox)) {
-      player.takeDamage(5) // Vilão corpo a corpo causa mais dano (5)
+      player.takeDamage(7) // Vilão corpo a corpo causa mais dano (5)
       vilao2.atacando = false // Para o ataque
 
       // Efeito visual de impacto (opcional)
@@ -290,6 +284,9 @@ function frame(currentTime) {
   if (faseAtual === 1 && vilao2.morto && !transicaoEmAndamento) {
     transicaoEmAndamento = true
     iniciarTransicaoParaFase2()
+  } else if(faseAtual === 1 && player.morto && !transicaoEmAndamento) {
+    transicaoEmAndamento = true
+    iniciarTransicaoParaFase2()
   }
   requestAnimationFrame(frame)
 }
@@ -306,17 +303,6 @@ function mostrarTelaPreta(callbackDepois) {
 
 function iniciarTransicaoParaFase2() {
   mostrarTelaPreta(() => {
-    console.log("Transição para fase 2 iniciada...")
-
-    const novoCenario = new Cenario2()
-
-    const vilao3 = new Vilao3({
-      position: { x: canvas.width - 500, y: 450 },
-      velocidade: { x: 0, y: 0 },
-    })
-    vilao3.setTarget(player)
-
-    entidades = [novoCenario, player, vilao3]
 
     faseAtual = 2
     transicaoEmAndamento = false

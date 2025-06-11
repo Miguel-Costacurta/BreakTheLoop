@@ -61,6 +61,7 @@ export class Sprite {
           this.frameCurrent++
         } else if (this.loop) {
           this.frameCurrent = 0
+          this.isAnimationDone = false // Reset quando faz loop
         } else {
           // Animação terminou e não deve fazer loop
           this.isAnimationDone = true
@@ -69,5 +70,18 @@ export class Sprite {
         }
       }
     }
+  }
+
+  // NOVO MÉTODO: Reset da animação
+  resetAnimation() {
+    this.frameCurrent = 0
+    this.frameElapsed = 0
+    this.isAnimationDone = false
+  }
+
+  // NOVO MÉTODO: Força o fim da animação
+  finishAnimation() {
+    this.frameCurrent = this.framesMax - 1
+    this.isAnimationDone = true
   }
 }
