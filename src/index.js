@@ -54,6 +54,7 @@ const keys = {
   e: { pressed: false },
 }
 
+
 // Sistema de cooldown para tiros do jogador
 let lastShootTime = 0
 const shootCooldownTime = 300

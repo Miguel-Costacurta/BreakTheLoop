@@ -35,6 +35,18 @@ export class Sprite {
         this.image.height * this.scale,
       )
     } else {
+        context.drawImage(
+            this.image,
+            this.frameCurrent * (this.image.width / this.framesMax),
+            0,
+            this.image.width / this.framesMax,
+            this.image.height,
+            this.position.x - this.offset.x,
+            this.position.y - this.offset.y,
+            (this.image.width / this.framesMax) * this.scale,
+            this.image.height * this.scale
+        );
+    }
       context.drawImage(
         this.image,
         this.frameCurrent * (this.image.width / this.framesMax),
