@@ -35,6 +35,18 @@ export class Sprite {
         this.image.height * this.scale,
       )
     } else {
+        context.drawImage(
+            this.image,
+            this.frameCurrent * (this.image.width / this.framesMax),
+            0,
+            this.image.width / this.framesMax,
+            this.image.height,
+            this.position.x - this.offset.x,
+            this.position.y - this.offset.y,
+            (this.image.width / this.framesMax) * this.scale,
+            this.image.height * this.scale
+        );
+    }
       context.drawImage(
         this.image,
         this.frameCurrent * (this.image.width / this.framesMax),
@@ -61,6 +73,7 @@ export class Sprite {
           this.frameCurrent++
         } else if (this.loop) {
           this.frameCurrent = 0
+          this.isAnimationDone = false // Reset quando faz loop
         } else {
           // Animação terminou e não deve fazer loop
           this.isAnimationDone = true
@@ -69,5 +82,18 @@ export class Sprite {
         }
       }
     }
+  }
+
+  // NOVO MÉTODO: Reset da animação
+  resetAnimation() {
+    this.frameCurrent = 0
+    this.frameElapsed = 0
+    this.isAnimationDone = false
+  }
+
+  // NOVO MÉTODO: Força o fim da animação
+  finishAnimation() {
+    this.frameCurrent = this.framesMax - 1
+    this.isAnimationDone = true
   }
 }

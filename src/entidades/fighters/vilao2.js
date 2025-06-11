@@ -6,7 +6,7 @@ export class Vilao2 extends lutadores {
     super({
       nome: "Vilao2",
       position,
-      imageSrc: "../../../images/Homeless_1/Idle_2.png", // Sprite inicial atualizada
+      imageSrc: "../../../images/Gangsters_3/Idle_2.png", // Sprite inicial atualizada
       scale: 3,
       framesMax: 11, // Frames da nova sprite de idle
       offset: { x: 0, y: 0 },
@@ -18,40 +18,29 @@ export class Vilao2 extends lutadores {
     // ========================================
     this.sprites = {
       idle: {
-        imageSrc: "../../../images/Homeless_1/Idle_2.png",
-        framesMax: 11, // Sprite de idle com 11 frames
-        loop:true,
+        imageSrc: "../../../images/Gangsters_3/Idle_2.png",
+        framesMax: 14,
       },
       run: {
-        imageSrc: "../../../images/Homeless_1/Run.png",
-        framesMax: 8, // Sprite de corrida com 8 frames
-        loop:true,
+        imageSrc: "../../../images/Gangsters_3/Run.png",
+        framesMax: 10,
       },
       attack: {
-        imageSrc: "../../../images/Homeless_1/Attack_2.png", // Ataque normal
-        framesMax: 3, // Ajuste conforme sua sprite de ataque normal
-        loop:false,
+        imageSrc: "../../../images/Gangsters_3/Attack.png",
+        framesMax: 5,
       },
       special: {
-        imageSrc: "../../../images/Homeless_1/Special.png", // ATAQUE ESPECIAL
-        framesMax: 13, // Sprite de ataque especial com 13 frames
-        loop:false,
+        imageSrc: "../../../images/Gangsters_3/Shot.png",
+        framesMax: 12,
       },
       jump: {
-        imageSrc: "../../../images/Homeless_1/Jump.png",
-        framesMax: 16, // Sprite de pulo com 16 frames
-        loop:false,
+        imageSrc: "../../../images/Gangsters_3/Jump.png",
+        framesMax: 10,
       },
-      hit:{
-        imageSrc:"../../../images/Homeless_1/Hurt.png",
-        framesMax: 3,
-        loop:false,
+      death: {
+        imageSrc: "../../../images/Gangsters_3/Dead.png", // Adicionando sprite de morte
+        framesMax: 5, // Ajuste conforme sua sprite
       },
-      death:{
-        imageSrc:"../../../images/Homeless_1/Dead.png",
-        framesMax: 4,
-        loop:false,
-      }
     }
 
     // Pré-carrega todas as imagens das sprites para evitar lag durante o jogo
@@ -72,8 +61,8 @@ export class Vilao2 extends lutadores {
     this.target = null
 
     // Distâncias ajustadas para combate corpo a corpo
-    this.distanciaAtaque = 75 // Distância para ataque normal
-    this.distanciaAtaqueEspecial = 80 // Distância maior para ataque especial
+    this.distanciaAtaque = 90 // Distância para ataque normal
+    this.distanciaAtaqueEspecial = 150 // Distância maior para ataque especial
     this.distanciaPerseguicao = 1250 // Distância para começar a perseguir
     this.distanciaRecuo = 50 // Distância muito próxima que faz o vilão recuar
 
@@ -83,15 +72,15 @@ export class Vilao2 extends lutadores {
     this.cooldownAtaque = 1500 // Tempo entre ataques normais (1.5 segundos)
     this.cooldownEspecial = 4000 // Tempo entre ataques especiais (4 segundos)
     this.velocidadeMovimento = 3 // Velocidade base (mais lento q o principal)
-    this.tempoNoEstado = 0.8 // Quanto tempo está no estado atual
-    this.duracaoAtaque = 700 // Duração da animação de ataque normal
+    this.tempoNoEstado = 0.3 // Quanto tempo está no estado atual
+    this.duracaoAtaque = 600 // Duração da animação de ataque normal
     this.duracaoEspecial = 2800 // Duração da animação de ataque especial (mais longa)
 
     // ========================================
     // SISTEMA DE ALEATORIEDADE - Incluindo Ataque Especial
     // ========================================
-    this.chanceAtaqueNormal = 0.6 // 50% chance de ataque normal
-    this.chanceAtaqueEspecial = 0.05 // 15% chance de ataque especial
+    this.chanceAtaqueNormal = 0.5 // 50% chance de ataque normal
+    this.chanceAtaqueEspecial = 0.15 // 15% chance de ataque especial
     this.chanceRecuo = 0.15 // 15% chance de recuar
     this.tempoReacaoMin = 500 // Tempo mínimo de reação
     this.tempoReacaoMax = 1000 // Tempo máximo de reação
@@ -512,14 +501,14 @@ export class Vilao2 extends lutadores {
   getSpecialAttackHitBox() {
     // Usa a mesma altura base do ataque normal, mas com maior alcance
     const specialAttackX = this.flip
-      ? this.position.x + this.attackHitbox.offset.x - this.attackHitbox.width - 60 // Maior alcance à esquerda
-      : this.position.x + this.attackHitbox.offset.x + 60 // Maior alcance à direita
+      ? this.position.x + this.attackHitbox.offset.x - this.attackHitbox.width - 90 // Maior alcance à esquerda
+      : this.position.x + this.attackHitbox.offset.x + 90 // Maior alcance à direita
 
     return {
       x: specialAttackX,
-      y: this.position.y + this.attackHitbox.offset.y - 20, // Ligeiramente mais alto
-      width: this.attackHitbox.width + 60, // Mais largo
-      height: this.attackHitbox.height + 40, // Mais alto
+      y: this.position.y + this.attackHitbox.offset.y - 25, // Ligeiramente mais alto
+      width: this.attackHitbox.width + 90, // Mais largo
+      height: this.attackHitbox.height + 90, // Mais alto
     }
   }
 
